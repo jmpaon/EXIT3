@@ -18,10 +18,8 @@ public class Exit3 {
      */
     public static void main(String[] args) {
         SquareMatrix<Integer> m = new SquareMatrix<>(Arrays.asList("Mem","Moo","Mau"));
-        System.out.println(m.identifiers.toString());
-        m.values.stream().forEach(x -> System.out.println(x));
-        System.out.println(m.values.size());
-        // System.out.println(m.toString());
+        
+        System.out.println(m.toString());
         
     }
     

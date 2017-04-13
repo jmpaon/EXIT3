@@ -21,8 +21,8 @@ import java.util.function.Predicate;
 public class SquareMatrix<V> {
     
     public final int varCount;
-    public List<List<V>> values;
-    public List<String> identifiers;
+    private List<List<V>> values;
+    private List<String> identifiers;
     private Predicate<V> valueValidator;
     
     public SquareMatrix(int varCount, List<String> identifiers, Predicate<V> valueValidator) {
@@ -35,7 +35,14 @@ public class SquareMatrix<V> {
         this.identifiers = identifiers;
 
         this.values = new ArrayList<>(varCount);
-        this.values.stream().forEach(x -> x = new ArrayList<>(varCount));
+        for(int i=0;i<varCount;i++){
+            List<V> list = new ArrayList<>();
+            for(int ii=0;ii<varCount;ii++)
+                list.add(null);
+            this.values.add(list);
+        }
+            
+        // this.values.stream().forEach(x -> x = new ArrayList<>(varCount));
         
     }
     
@@ -94,7 +101,8 @@ public class SquareMatrix<V> {
         StringBuilder sb = new StringBuilder();
         for(int i=0;i<varCount;i++) {
             sb.append(getId(i+1)).append(" : ");
-            for(V v : values.get(i+1)) sb.append(v.toString()).append(";") ;
+            for(V v : values.get(i)) sb.append(Objects.isNull(v) ? "[null]" :  v.toString()).append("; ");
+            sb.append("\n");
         }
         return sb.toString();
     }
