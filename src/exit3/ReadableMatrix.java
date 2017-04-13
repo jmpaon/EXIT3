@@ -5,6 +5,7 @@
  */
 package exit3;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -28,5 +29,13 @@ public interface ReadableMatrix<V> {
     public String getId(int index);
     
     public List<V> chainValues(List<Integer> chainIndices);
+    
+    public int varCount();
+    
+    public void testIndex(int index);
+    public void testIndex(Collection<Integer> indices);
+    public void testIndex(Integer[] indices);
+    public void testIndex(int[] indices);
+    
     
 }

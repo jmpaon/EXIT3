@@ -12,7 +12,7 @@ import java.util.function.Predicate;
  *
  * @author jmpaon
  */
-public class DoubleMatrix extends NumberMatrix<Double>{
+public class DoubleMatrix extends NumberMatrix<Double> implements ComputableMatrix {
 
     public DoubleMatrix(int varCount) {
         super(varCount);
@@ -36,6 +36,11 @@ public class DoubleMatrix extends NumberMatrix<Double>{
     
     public DoubleMatrix normalize() {
         throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Double relatingValue() {
+        return 5d;
     }
     
     

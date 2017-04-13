@@ -5,7 +5,12 @@
  */
 package exit3;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.IntStream;
 
 /**
  *
@@ -18,9 +23,31 @@ public class ImpactChain implements ComputableChain {
     private final List<Integer> indices;
     private final ComputableMatrix matrix;
     
-    public ImpactChain() {
-        throw new UnsupportedOperationException();
+    public ImpactChain(ComputableMatrix matrix, List<Integer> indices) {
+        if(Objects.isNull(matrix) || Objects.isNull(indices) ) throw new NullPointerException();
+        if(indices.isEmpty()) throw new IllegalArgumentException();
+        matrix.testIndex(indices);
+        
+        this.matrix = matrix;
+        this.indices = indices;
+        
     }
+    
+    public ImpactChain(ComputableMatrix matrix, Integer[] indices) {
+        this(matrix, Arrays.asList(indices) );
+    }
+    
+    public ImpactChain(ComputableMatrix matrix, int... indices) {
+        List<Integer> list = new LinkedList<Integer>();
+        for(int index : indices) list.add(index);
+        if(Objects.isNull(matrix) || Objects.isNull(indices) ) throw new NullPointerException();
+        if(list.isEmpty()) throw new IllegalArgumentException();
+        matrix.testIndex(indices);
+        this.matrix = matrix;
+        this.indices = list;
+        
+    }
+    
     
     @Override
     public Double impact() {
@@ -34,7 +61,29 @@ public class ImpactChain implements ComputableChain {
 
     @Override
     public List<ComputableChain> expansions() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<Integer> possibleIndices = range(matrix.varCount());
+        possibleIndices.removeAll(this.indices);
+        List<ComputableChain> expandedByOne = new LinkedList<>();
+        for(int addedIndex : possibleIndices) {
+            List<Integer> expandedIndices = new LinkedList<>();
+            Collections.copy(expandedIndices, indices);
+            expandedIndices.add(expandedIndices.size()-2, addedIndex);
+            expandedByOne.add(new ImpactChain(this.matrix, expandedIndices));
+        }
+        return expandedByOne;
+    }
+    
+    @Override
+    public String toString() {
+        return "Impact chain with indices " + this.indices.toString();
+    }
+    
+    static List<Integer> range(int to) {
+        //return Arrays.asList(IntStream.range(1, to).toArray());
+        List l = new LinkedList();
+        int i=1;
+        while(i<=to) l.add(i);
+        return l;
     }
     
 }

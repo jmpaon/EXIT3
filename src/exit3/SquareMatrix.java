@@ -7,6 +7,7 @@ package exit3;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -105,12 +106,14 @@ public class SquareMatrix<V> implements ReadableMatrix<V>{
             }
     }
     
+    @Override
     public V get(int row, int column) {
         Predicate<Integer> indexIsValid = ( x -> x >= 0 && x <= this.varCount);
         if(! indexIsValid.test(row) && indexIsValid.test(column)) throw new IllegalArgumentException("Invalid matrix entry: ["+row+","+column+"]");
         return this.values.get(row-1).get(column-1);
     }
     
+    @Override
     public String getId(int index) {
         return identifiers.get(index-1);
     }
@@ -143,6 +146,26 @@ public class SquareMatrix<V> implements ReadableMatrix<V>{
         }
         return chain;
     }
+
+    @Override
+    public int varCount() {
+        return this.varCount;
+    }
+    
+    @Override
+    public void testIndex(int index) {
+        if(index < 0 || index > varCount) throw new NoSuchElementException(
+                String.format("Matrix variable count is %d and used index is %d", varCount, index));
+    }
+
+    @Override
+    public void testIndex(Collection<Integer> indices) {indices.forEach(x -> testIndex(x));}        
+    @Override
+    public void testIndex(Integer[] indices) { testIndex(Arrays.asList(indices));}
+    @Override
+    public void testIndex(int[] indices) { for(int x : indices) testIndex(x);}    
+    
+
     
     public class MatrixIterator<V> implements Iterator<V> {
         int row;
@@ -173,7 +196,7 @@ public class SquareMatrix<V> implements ReadableMatrix<V>{
         public void replace(V value) {
             if(col==0) throw new NoSuchElementException();
             matrix.set(this.row, this.col, value);
-        }        
+        }
         
     }
     

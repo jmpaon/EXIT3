@@ -38,6 +38,35 @@ public class Exit3 {
         p(dm);
         
         ReadableMatrix rm = dm;
+        ComputableMatrix cm = dm;
+        ImpactChain ic = new ImpactChain(cm, 1,2,3);
+        p(ic);
+        p(ic.impact());
+        p((-2d/5d)*(7d/5d));
+        
+
+                
+    }
+    
+    public static void test1() {
+        
+        List<List<Integer>> l1 = Arrays.asList(Arrays.asList(1,2,3), Arrays.asList(1,2,3), Arrays.asList(1,2,3) );
+        List<List<Integer>> l2 = Arrays.asList(Arrays.asList(4,5,6), Arrays.asList(6,7,8), Arrays.asList(8,9,13) );
+        List<List<Number>> ln = Arrays.asList(Arrays.asList(1.,2.,3.), Arrays.asList(1.,2.,3.), Arrays.asList(1.,2.,3.) );
+        List<List<Number>> lin = Arrays.asList(Arrays.asList(1,2,3), Arrays.asList(1,2,3), Arrays.asList(1,2,3) );
+        List<List<Double>> ld = Arrays.asList(Arrays.asList(1d,-2d,-3d), Arrays.asList(1d,2d,7d), Arrays.asList(1d,2d,3d) );
+        
+        List<String> s1 = Arrays.asList("Mem","Moo","Mau");
+        
+        SquareMatrix<Integer> m  = new SquareMatrix<>(Arrays.asList("Mem","Moo","Mau"));
+        SquareMatrix<Integer> m3 = new SquareMatrix<>(3, Arrays.asList("vara","varb","varc"), (x -> x <= 7), l1);
+        SquareMatrix<Integer> m2 = new SquareMatrix<>(Arrays.asList("Mem","Moo","Mau"));
+        
+        DoubleMatrix dm = new DoubleMatrix(s1);
+        dm.setAll(ld);
+        p(dm);
+        
+        ReadableMatrix rm = dm;
         p("Readable matrix : " + rm.get(1, 1));
         p("Values of chainIndices: " + rm.chainValues(Arrays.asList(1,2,3)));
         
@@ -63,10 +92,9 @@ public class Exit3 {
         
         
         Double ddd = d2.summary(f);
-        double dd2 = d2.summary( (List<Double> x) -> { double sum=0; for(double xx : x) sum += xx; return sum; } );     
+        double dd2 = d2.summary( (List<Double> x) -> { double sum=0; for(double xx : x) sum += Math.abs(xx); return sum; } );     
         p(d2);
-        p(dd2);
-                
+        p(dd2);        
     }
     
     public static void p(Object o) {

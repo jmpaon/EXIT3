@@ -11,7 +11,7 @@ import java.util.List;
  *
  * @author jmpaon
  */
-public interface ComputableMatrix extends ReadableMatrix {
+public interface ComputableMatrix extends ReadableMatrix<Double> {
     
     public Double relatingValue();
     
