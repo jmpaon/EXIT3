@@ -26,23 +26,30 @@ public class Exit3 {
         List<List<Number>> ln = Arrays.asList(Arrays.asList(1.,2.,3.), Arrays.asList(1.,2.,3.), Arrays.asList(1.,2.,3.) );
         List<List<Number>> lin = Arrays.asList(Arrays.asList(1,2,3), Arrays.asList(1,2,3), Arrays.asList(1,2,3) );
         List<List<Double>> ld = Arrays.asList(Arrays.asList(1d,-2d,-3d), Arrays.asList(1d,2d,7d), Arrays.asList(1d,2d,3d) );
+        List<List<Double>> ld5 = Arrays.asList(
+                Arrays.asList(1d,-2d,-3d,2d,4d),
+                Arrays.asList(1d,-2d,-3d,2d,4d),
+                Arrays.asList(1d,-2d,-3d,2d,4d),
+                Arrays.asList(1d,-2d,-3d,2d,4d),
+                Arrays.asList(1d,-2d,-3d,2d,4d));
         
         List<String> s1 = Arrays.asList("Mem","Moo","Mau");
+        List<String> s5 = Arrays.asList("Mem","Moo","Mau","Mur","Miu");
         
         SquareMatrix<Integer> m  = new SquareMatrix<>(Arrays.asList("Mem","Moo","Mau"));
         SquareMatrix<Integer> m3 = new SquareMatrix<>(3, Arrays.asList("vara","varb","varc"), (x -> x <= 7), l1);
         SquareMatrix<Integer> m2 = new SquareMatrix<>(Arrays.asList("Mem","Moo","Mau"));
         
-        DoubleMatrix dm = new DoubleMatrix(s1);
-        dm.setAll(ld);
+        DoubleMatrix dm = new DoubleMatrix(s5);
+        dm.setAll(ld5);
         p(dm);
         
         ReadableMatrix rm = dm;
         ComputableMatrix cm = dm;
-        ImpactChain ic = new ImpactChain(cm, 1,2,3);
+        ImpactChain ic = new ImpactChain(cm, 1,2);
         p(ic);
         p(ic.impact());
-        p((-2d/5d)*(7d/5d));
+        p(ic.expansions());
         
 
                 

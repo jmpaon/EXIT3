@@ -65,9 +65,10 @@ public class ImpactChain implements ComputableChain {
         possibleIndices.removeAll(this.indices);
         List<ComputableChain> expandedByOne = new LinkedList<>();
         for(int addedIndex : possibleIndices) {
-            List<Integer> expandedIndices = new LinkedList<>();
-            Collections.copy(expandedIndices, indices);
-            expandedIndices.add(expandedIndices.size()-2, addedIndex);
+            List<Integer> expandedIndices = new LinkedList<Integer>();
+            for(Integer i : indices) expandedIndices.add(i);
+            // Collections.copy(expandedIndices, indices);
+            expandedIndices.add(expandedIndices.size()-1, addedIndex);
             expandedByOne.add(new ImpactChain(this.matrix, expandedIndices));
         }
         return expandedByOne;
@@ -82,7 +83,7 @@ public class ImpactChain implements ComputableChain {
         //return Arrays.asList(IntStream.range(1, to).toArray());
         List l = new LinkedList();
         int i=1;
-        while(i<=to) l.add(i);
+        while(i++<to) l.add(i);
         return l;
     }
     
