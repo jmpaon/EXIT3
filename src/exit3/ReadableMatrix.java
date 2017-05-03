@@ -28,6 +28,11 @@ public interface ReadableMatrix<V> {
      */
     public String getId(int index);
     
+    /**
+     * 
+     * @param chainIndices
+     * @return 
+     */
     public List<V> chainValues(List<Integer> chainIndices);
     
     public int varCount();
