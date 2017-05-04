@@ -26,7 +26,6 @@ public class ImpactChain implements ComputableChain {
     public ImpactChain(ComputableMatrix matrix, List<Integer> indices) {
         if(Objects.isNull(matrix) || Objects.isNull(indices) ) throw new NullPointerException();
         if(indices.isEmpty()) throw new IllegalArgumentException();
-        matrix.testIndex(indices);
         
         this.matrix = matrix;
         this.indices = indices;
@@ -42,7 +41,7 @@ public class ImpactChain implements ComputableChain {
         for(int index : indices) list.add(index);
         if(Objects.isNull(matrix) || Objects.isNull(indices) ) throw new NullPointerException();
         if(list.isEmpty()) throw new IllegalArgumentException();
-        matrix.testIndex(indices);
+
         this.matrix = matrix;
         this.indices = list;
         
@@ -74,10 +73,12 @@ public class ImpactChain implements ComputableChain {
         return expandedByOne;
     }
     
+    
     @Override
     public String toString() {
         return "Impact chain with indices " + this.indices.toString();
     }
+    
     
     static List<Integer> range(int to) {
         //return Arrays.asList(IntStream.range(1, to).toArray());

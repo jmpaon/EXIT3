@@ -37,10 +37,12 @@ public interface ReadableMatrix<V> {
     
     public int varCount();
     
+    /*
     public void testIndex(int index);
     public void testIndex(Collection<Integer> indices);
     public void testIndex(Integer[] indices);
     public void testIndex(int[] indices);
+    */
     
     
 }

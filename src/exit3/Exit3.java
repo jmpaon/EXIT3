@@ -40,7 +40,7 @@ public class Exit3 {
         SquareMatrix<Integer> m3 = new SquareMatrix<>(3, Arrays.asList("vara","varb","varc"), (x -> x <= 7), l1);
         SquareMatrix<Integer> m2 = new SquareMatrix<>(Arrays.asList("Mem","Moo","Mau"));
         
-        DoubleMatrix dm = new DoubleMatrix(s5);
+        ImpactMatrix dm = new ImpactMatrix(s5);
         dm.setAll(ld5);
         p(dm);
         
@@ -69,7 +69,7 @@ public class Exit3 {
         SquareMatrix<Integer> m3 = new SquareMatrix<>(3, Arrays.asList("vara","varb","varc"), (x -> x <= 7), l1);
         SquareMatrix<Integer> m2 = new SquareMatrix<>(Arrays.asList("Mem","Moo","Mau"));
         
-        DoubleMatrix dm = new DoubleMatrix(s1);
+        ImpactMatrix dm = new ImpactMatrix(s1);
         dm.setAll(ld);
         p(dm);
         

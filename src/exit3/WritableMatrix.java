@@ -11,7 +11,7 @@ package exit3;
  * @author jmpaon
  * @param <V>
  */
-public interface WritableMatrix<V> extends ReadableMatrix<V> {
+public interface WritableMatrix<V> extends ReadableMatrix {
     
     /**
      * Sets the value in matrix entry (row,column) to <b>value</b>
