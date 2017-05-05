@@ -5,6 +5,7 @@
  */
 package exit3.matrices;
 
+import exit3.chains.VariableChain;
 import exit3.matrices.ComputableMatrix;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -35,6 +36,10 @@ public class ImpactMatrix extends NumberMatrix<Double> implements ComputableMatr
         super(varCount, identifiers, valueValidator, values);
     }
     
+    public ImpactMatrix(SquareMatrix matrix) {
+        super(matrix.varCount, matrix.identifiers, matrix.valueValidator, matrix.values);
+    }
+    
     @Override
     public void set(int row, int column, Double value) {
         Objects.requireNonNull(value, "Null impact value");
@@ -43,15 +48,26 @@ public class ImpactMatrix extends NumberMatrix<Double> implements ComputableMatr
     }
     
     public ComputableMatrix normalize(double normalizationValue) {
-        
         throw new UnsupportedOperationException();
     }
+    
+    
 
 
     @Override
-    public Double relatingValue() {
+    public double relatingValue() {
         // TODO implement
         return 5d;
+    }
+
+    @Override
+    public double impactOfChain(VariableChain chain) {
+        
+        if(chain.matrix != this) throw new IllegalArgumentException("variable chain refers to different matrix");
+        
+        
+        
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     

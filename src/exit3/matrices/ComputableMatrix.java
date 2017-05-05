@@ -5,6 +5,7 @@
  */
 package exit3.matrices;
 
+import exit3.chains.VariableChain;
 import java.util.List;
 
 /**
@@ -13,6 +14,8 @@ import java.util.List;
  */
 public interface ComputableMatrix extends ReadableMatrix<Double> {
     
-    public Double relatingValue();
+    public double relatingValue();
+    
+    public double impactOfChain(VariableChain chain);
     
 }

@@ -5,12 +5,13 @@
  */
 package exit3.processes;
 
-import exit3.matrices.ComputableMatrix;
+import exit3.matrices.*;
+import java.util.function.Function;
 
 /**
  *
  * @author juha
  */
 public interface ComputationProcess {
-    public ComputationResult compute(ComputableMatrix matrix);
+    public ComputationResult compute(ComputableMatrix matrix, Function<ComputableMatrix, SquareMatrix> computer);
 }

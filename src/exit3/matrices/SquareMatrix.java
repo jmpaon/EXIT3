@@ -26,7 +26,7 @@ import java.util.function.Predicate;
 public class SquareMatrix<V> implements WritableMatrix<V> {
     
     public final int varCount;
-    private List<List<V>> values;
+    protected List<List<V>> values;
     protected final List<String> identifiers;
     protected final Predicate<V> valueValidator;
     
@@ -150,6 +150,7 @@ public class SquareMatrix<V> implements WritableMatrix<V> {
         return this.varCount;
     }
     
+    
     public V summarizeValues(Function<List<V>, V> summaryOperation) {
         return summaryOperation.apply(flatValues());
     }
@@ -162,7 +163,7 @@ public class SquareMatrix<V> implements WritableMatrix<V> {
         List<V> valuesCopy = new LinkedList<>();
         Iterator<V> it = this.readingIterator();
         while(it.hasNext()) valuesCopy.add(it.next());
-        return valuesCopy;        
+        return valuesCopy;
     }
     
 

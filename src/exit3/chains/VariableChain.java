@@ -8,26 +8,26 @@ package exit3.chains;
 import exit3.matrices.ReadableMatrix;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.IntStream;
 
 /**
  *
  * @author jmpaon
  */
-public class VariableChain {
-    
-    /* Will be abstract */
+public abstract class VariableChain {
     
     protected final List<Integer> indices;
-    private final ReadableMatrix matrix;
+    public final ReadableMatrix matrix;
     
     public VariableChain(ReadableMatrix matrix, List<Integer> indices) {
         Objects.requireNonNull(matrix, "matrix argument is null");
         Objects.requireNonNull(indices, "index list is null");
-        // if(indices.isEmpty()) throw new IllegalArgumentException();
+        if(new HashSet(indices).size() != indices.size()) throw new IllegalArgumentException("Indices contain duplicate index values: " + indices);
         indices.stream().forEach((Integer x) -> Objects.requireNonNull(x));
         indices.stream().forEach((Integer x) -> matrix.testIndex(x));
         
@@ -44,6 +44,10 @@ public class VariableChain {
         return indices.get(index-1);
     }
     
+    public List<Integer> getChainValues() {
+        
+    }
+    
     
     @Override
     public String toString() {
@@ -58,5 +62,25 @@ public class VariableChain {
         while(i++<to) l.add(i);
         return l;
     }
+
+    /**
+     * Returns a list of the possible 1-variable expansions of this impact chain
+     * @return
+     */
+    @Override
+    public List<VariableChain> expansions() {
+        List<Integer> possibleIndices = range(matrix.varCount());
+        possibleIndices.removeAll(this.indices);
+        List<VariableChain> expandedByOne = new LinkedList<>();
+        for(int addedIndex : possibleIndices) {
+            List<Integer> expandedIndices = new LinkedList<>();
+            for(Integer i : indices) expandedIndices.add(i);
+            // Collections.copy(expandedIndices, indices);
+            expandedIndices.add(expandedIndices.size()-1, addedIndex);
+            expandedByOne.add(new ImpactChain(this.matrix, expandedIndices));
+        }
+        return expandedByOne;
+    }
+    
     
 }
