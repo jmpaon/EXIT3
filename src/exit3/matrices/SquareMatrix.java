@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package exit3;
+package exit3.matrices;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 /**
@@ -94,7 +95,7 @@ public class SquareMatrix<V> implements WritableMatrix<V> {
         this.values.get(row-1).set(column-1, value);
     }
     
-    protected void setAll(List<List<V>> values) {
+    public void setAll(List<List<V>> values) {
         if(values.size() != this.varCount || values.stream().anyMatch(x -> x.size() != this.varCount))
             throw new IllegalArgumentException("Dimensions of the value array do not match the target matrix dimensions");
         
@@ -149,6 +150,21 @@ public class SquareMatrix<V> implements WritableMatrix<V> {
         return this.varCount;
     }
     
+    public V summarizeValues(Function<List<V>, V> summaryOperation) {
+        return summaryOperation.apply(flatValues());
+    }
+    
+    public V summarizeMatrix(Function<ReadableMatrix, V> summaryOperation) {
+        return summaryOperation.apply(this);
+    }
+    
+    public List<V> flatValues() {
+        List<V> valuesCopy = new LinkedList<>();
+        Iterator<V> it = this.readingIterator();
+        while(it.hasNext()) valuesCopy.add(it.next());
+        return valuesCopy;        
+    }
+    
 
     public void testIndex(int index) {
         if(index < 0 || index > varCount) throw new NoSuchElementException(
@@ -170,18 +186,20 @@ public class SquareMatrix<V> implements WritableMatrix<V> {
     public void testIndex(int[] indices) { for(int x : indices) testIndex(x);}    
     
     
-    public MatrixIterator<V> iterator() {
-        return new MatrixIterator<V>(this);
-    }
+    public ReadingIterator readingIterator() { return new ReadingIterator(this); }
+    public WritingIterator writingIterator() { return new WritingIterator(this); }
     
-    public class ReadingIterator<V> implements Iterator<V> {
+    
+    
+    
+    public static class ReadingIterator<V> implements Iterator<V> {
 
         private int row;
         private int column;
         private final ReadableMatrix<V> matrix;
         
-        public ReadingIterator(ReadableMatrix<V> matrix) {
-            if(Objects.isNull(matrix)) throw new NullPointerException("matrix argument is null");
+        ReadingIterator(ReadableMatrix<V> matrix) {
+            Objects.requireNonNull(matrix, "matrix argument is null");
             this.row = 1;
             this.column = 0;
             this.matrix = matrix;
@@ -196,13 +214,13 @@ public class SquareMatrix<V> implements WritableMatrix<V> {
         
         @Override
         public boolean hasNext() {
-            return row < varCount || (row == varCount && column < varCount);
+            return row < matrix.varCount() || (row == matrix.varCount() && column < matrix.varCount());
         }
 
         @Override
         public V next() {
             if(this.hasNext()) {
-                if(column < varCount) column++;
+                if(column < matrix.varCount()) column++;
                 else { column = 1 ; row++ ; }
                 return matrix.get(row, column);
             }
@@ -211,22 +229,19 @@ public class SquareMatrix<V> implements WritableMatrix<V> {
         
     }
     
-    public class WritingIterator<V> extends SquareMatrix<V>.ReadingIterator<V> implements Iterator<V> {
+    public static class WritingIterator<V> extends ReadingIterator<V> {
         
         private int row;
         private int column;
         private final WritableMatrix<V> matrix;
         
         public WritingIterator(WritableMatrix<V> matrix) {
+            super(matrix);
             this.row = 1;
             this.column = 0;
             this.matrix = matrix;
         }
-        
-        @Override
-        public void forEachRemaining(Consumer<? super V> action) {
-            Iterator.super.forEachRemaining(action); //To change body of generated methods, choose Tools | Templates.
-        }
+
 
         /**
          * Replaces the value at the matrix entry currently iterated
@@ -235,71 +250,9 @@ public class SquareMatrix<V> implements WritableMatrix<V> {
         public void replace(V value) {
             if(column==0) throw new NoSuchElementException();
             matrix.set(this.row, this.column, value);
-        }        
-        
-    }
-    
-    
-    @Deprecated
-    public class MatrixIterator<V> implements Iterator<V> {
-        private int row;
-        private int col;
-        private final SquareMatrix<V> matrix;
-        
-        public MatrixIterator(SquareMatrix<V> matrix) {
-            this.row = 1;
-            this.col = 0;
-            this.matrix = matrix;
-        }
-        
-        /**
-         * @return Current matrix row of the iterator
-         */
-        public int row() { return row; }
-        
-        /**
-         * @return Current matrix column of the iterator
-         */
-        public int column() { return col; }
-
-        @Override
-        public boolean hasNext() {
-            return row < varCount || (row == varCount && col < varCount);
-        }
-
-        @Override
-        public V next() {
-            if(this.hasNext()) {
-                if(col < varCount) col++;
-                else { col = 1 ; row++ ; }
-                return matrix.get(row, col);
-            }
-            throw new NoSuchElementException();
-        }
-        
-        /**
-         * Replaces the value at the matrix entry currently iterated
-         * @param value New value
-         */
-        public void replace(V value) {
-            if(col==0) throw new NoSuchElementException();
-            matrix.set(this.row, this.col, value);
         }
         
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     
 }

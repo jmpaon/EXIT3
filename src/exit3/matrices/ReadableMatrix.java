@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package exit3;
+package exit3.matrices;
 
 import java.util.Collection;
 import java.util.List;
@@ -37,12 +37,16 @@ public interface ReadableMatrix<V> {
     
     public int varCount();
     
-    /*
+    /**
+     * Tests the validity of <b>index</b> and throws <code>NoSuchElementException</code> if index is invalid
+     * @param index 
+     */
     public void testIndex(int index);
-    public void testIndex(Collection<Integer> indices);
-    public void testIndex(Integer[] indices);
-    public void testIndex(int[] indices);
-    */
     
+    /**
+     * Returns a reading iterator for a readable matrix
+     * @return A reading iterator
+     */
+    public SquareMatrix.ReadingIterator<V> readingIterator();
     
 }

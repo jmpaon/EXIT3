@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package exit3;
+package exit3.chains;
 
 import java.util.List;
 

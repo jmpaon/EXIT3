@@ -5,6 +5,9 @@
  */
 package exit3;
 
+import exit3.matrices.*;
+import exit3.chains.*;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
@@ -27,11 +30,11 @@ public class Exit3 {
         List<List<Number>> lin = Arrays.asList(Arrays.asList(1,2,3), Arrays.asList(1,2,3), Arrays.asList(1,2,3) );
         List<List<Double>> ld = Arrays.asList(Arrays.asList(1d,-2d,-3d), Arrays.asList(1d,2d,7d), Arrays.asList(1d,2d,3d) );
         List<List<Double>> ld5 = Arrays.asList(
-                Arrays.asList(1d,-2d,-3d,2d,4d),
-                Arrays.asList(1d,-2d,-3d,2d,4d),
-                Arrays.asList(1d,-2d,-3d,2d,4d),
-                Arrays.asList(1d,-2d,-3d,2d,4d),
-                Arrays.asList(1d,-2d,-3d,2d,4d));
+                Arrays.asList(0d,-2d,-3d,2d,4d),
+                Arrays.asList(1d,0d,-3d,2d,4d),
+                Arrays.asList(1d,-2d,-0d,2d,4d),
+                Arrays.asList(1d,-2d,-3d,0d,4d),
+                Arrays.asList(1d,-2d,-3d,2d,0d));
         
         List<String> s1 = Arrays.asList("Mem","Moo","Mau");
         List<String> s5 = Arrays.asList("Mem","Moo","Mau","Mur","Miu");
@@ -46,7 +49,7 @@ public class Exit3 {
         
         ReadableMatrix rm = dm;
         ComputableMatrix cm = dm;
-        ImpactChain ic = new ImpactChain(cm, 1,2);
+        ImpactChain ic = new ImpactChain(cm, Arrays.asList(1,2));
         p(ic);
         p(ic.impact());
         p(ic.expansions());
@@ -82,7 +85,6 @@ public class Exit3 {
         m3.set(1, 1, 4);
         m3.set(1, 2, -4);
         
-        m3.identifiers.set(2, "purr");
         
         NumberMatrix<Double> d1 = new NumberMatrix<Double>(3, s1, x -> Math.abs((Double) x) <= 7., ld);
         NumberMatrix<Double> d2 = d1.copy();

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package exit3;
+package exit3.matrices;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -14,9 +14,9 @@ import java.util.function.Predicate;
 /**
  *
  * @author jmpaon
- * @param <T> Type of Number (Integer, Long, Double) 
+ * @param <V> Type of Number (Integer, Long, Double) 
  */
-public class NumberMatrix<T extends Number> extends SquareMatrix<T> {
+public class NumberMatrix<V extends Number> extends SquareMatrix<V> {
     
     public NumberMatrix(int varCount) {
         super(varCount);
@@ -26,15 +26,15 @@ public class NumberMatrix<T extends Number> extends SquareMatrix<T> {
         super(identifiers);
     }
 
-    public NumberMatrix(List<String> identifiers, Predicate<T> valueValidator) {
+    public NumberMatrix(List<String> identifiers, Predicate<V> valueValidator) {
         super(identifiers, valueValidator);
     }
 
-    public NumberMatrix(int varCount, List<String> identifiers, Predicate<T> valueValidator, List<List<T>> values) {
+    public NumberMatrix(int varCount, List<String> identifiers, Predicate<V> valueValidator, List<List<V>> values) {
         super(varCount, identifiers, valueValidator, values);
     }
     
-    public NumberMatrix<T> copy() {
+    public NumberMatrix<V> copy() {
         NumberMatrix copyMatrix = new NumberMatrix(this.identifiers, this.valueValidator);
         
         for(int row=1;row<=this.varCount;row++)
@@ -45,23 +45,8 @@ public class NumberMatrix<T extends Number> extends SquareMatrix<T> {
         return copyMatrix;
     }
     
-    NumberMatrix<T> transform(Function<NumberMatrix<T>, NumberMatrix<T>> transformer) {
+    WritableMatrix<V> transform(Function<ReadableMatrix<V>, WritableMatrix<V>> transformer) {
         return transformer.apply(this);
     }
-    
-    public T summary(Function<List<T>, T> summaryOperation) {
-        return summaryOperation.apply(flatValues());
-    }
-    
-    public List<T> flatValues() {
-        List<T> valuesCopy = new LinkedList<>();
-        Iterator<T> it = this.iterator();
-        while(it.hasNext()) valuesCopy.add(it.next());
-        return valuesCopy;
-    }
-    
-    
-    
-    
     
 }

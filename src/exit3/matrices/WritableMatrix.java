@@ -1,4 +1,4 @@
-package exit3;
+package exit3.matrices;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -11,7 +11,7 @@ package exit3;
  * @author jmpaon
  * @param <V>
  */
-public interface WritableMatrix<V> extends ReadableMatrix {
+public interface WritableMatrix<V> extends ReadableMatrix<V> {
     
     /**
      * Sets the value in matrix entry (row,column) to <b>value</b>
@@ -20,5 +20,11 @@ public interface WritableMatrix<V> extends ReadableMatrix {
      * @param value New value
      */
     public void set(int row, int column, V value);
+    
+    /**
+     * Returns a writing iterator for a writable matrix
+     * @return A writing iterator
+     */
+    public SquareMatrix.WritingIterator<V> writingIterator();
     
 }
