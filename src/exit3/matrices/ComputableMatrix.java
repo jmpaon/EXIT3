@@ -13,9 +13,11 @@ import java.util.List;
  * @author jmpaon
  */
 public interface ComputableMatrix extends ReadableMatrix<Double> {
-    
-    public double relatingValue();
-    
+
     public double impactOfChain(VariableChain chain);
+    
+    public double impactOfChain(List<Integer> chain);
+    
+
     
 }

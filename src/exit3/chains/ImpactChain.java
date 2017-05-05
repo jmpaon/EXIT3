@@ -7,50 +7,39 @@ package exit3.chains;
 
 import exit3.matrices.ComputableMatrix;
 import static exit3.chains.VariableChain.range;
+import exit3.matrices.ReadableMatrix;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
 /**
  *
  * @author juha
  */
-public class ImpactChain extends VariableChain implements ComputableChain {
+public class ImpactChain extends VariableChain {
     
-    private ComputableMatrix matrix;
+    private final ReadableMatrix matrix;
 
-    public ImpactChain(ComputableMatrix matrix, List<Integer> indices) {
+
+    public ImpactChain(ReadableMatrix matrix, List<Integer> indices) {
         super(matrix, indices);
         this.matrix = matrix;
     }
 
-    public ImpactChain(ComputableMatrix matrix, Integer[] indices) {
+    public ImpactChain(ReadableMatrix matrix, Integer[] indices) {
         super(matrix, indices);
         this.matrix = matrix;
     }
     
-    @Override
+
     public Double impact() {
-        double relatingValue = matrix.relatingValue();
+        double relatingValue = 5d;
         double impact = 1;
         List<Double> directImpactValues = matrix.chainValues(this.indices);
         for(Double d : directImpactValues) impact *= ( d / relatingValue );
         return impact;
-    }    
-
-    @Override
-    public List<ComputableChain> expansions() {
-        List<Integer> possibleIndices = range(matrix.varCount());
-        possibleIndices.removeAll(this.indices);
-        List<ComputableChain> expandedByOne = new LinkedList<>();
-        for(int addedIndex : possibleIndices) {
-            List<Integer> expandedIndices = new LinkedList<>();
-            for(Integer i : indices) expandedIndices.add(i);
-            // Collections.copy(expandedIndices, indices);
-            expandedIndices.add(expandedIndices.size()-1, addedIndex);
-            expandedByOne.add(new ImpactChain(this.matrix, expandedIndices));
-        }
-        return expandedByOne;
-    }
+    } 
     
     
 }

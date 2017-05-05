@@ -19,7 +19,7 @@ import java.util.stream.IntStream;
  *
  * @author jmpaon
  */
-public abstract class VariableChain {
+public class VariableChain {
     
     protected final List<Integer> indices;
     public final ReadableMatrix matrix;
@@ -45,7 +45,7 @@ public abstract class VariableChain {
     }
     
     public List<Integer> getChainValues() {
-        
+        return matrix.chainValues(indices);
     }
     
     
@@ -66,8 +66,9 @@ public abstract class VariableChain {
     /**
      * Returns a list of the possible 1-variable expansions of this impact chain
      * @return
-     */
+     *
     @Override
+    */
     public List<VariableChain> expansions() {
         List<Integer> possibleIndices = range(matrix.varCount());
         possibleIndices.removeAll(this.indices);
@@ -77,10 +78,10 @@ public abstract class VariableChain {
             for(Integer i : indices) expandedIndices.add(i);
             // Collections.copy(expandedIndices, indices);
             expandedIndices.add(expandedIndices.size()-1, addedIndex);
-            expandedByOne.add(new ImpactChain(this.matrix, expandedIndices));
+            expandedByOne.add(new VariableChain(this.matrix, expandedIndices));
         }
         return expandedByOne;
     }
-    
+
     
 }

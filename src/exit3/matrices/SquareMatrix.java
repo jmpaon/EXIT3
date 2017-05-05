@@ -8,12 +8,13 @@ package exit3.matrices;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
-import java.util.function.Consumer;
+import java.util.function.BiPredicate;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -39,7 +40,7 @@ public class SquareMatrix<V> implements WritableMatrix<V> {
         if(identifiers.stream().anyMatch(x -> Objects.isNull(x) || x.isEmpty() )) throw new IllegalArgumentException("Null-valued or 0-length identifier string");        
         
         this.varCount = identifiers.size();
-        this.identifiers = identifiers;
+        this.identifiers = Collections.unmodifiableList(identifiers);
 
         this.values = new ArrayList<>(varCount);
         for(int i=0;i<varCount;i++){
@@ -150,15 +151,6 @@ public class SquareMatrix<V> implements WritableMatrix<V> {
         return this.varCount;
     }
     
-    
-    public V summarizeValues(Function<List<V>, V> summaryOperation) {
-        return summaryOperation.apply(flatValues());
-    }
-    
-    public V summarizeMatrix(Function<ReadableMatrix, V> summaryOperation) {
-        return summaryOperation.apply(this);
-    }
-    
     public List<V> flatValues() {
         List<V> valuesCopy = new LinkedList<>();
         Iterator<V> it = this.readingIterator();
@@ -187,10 +179,21 @@ public class SquareMatrix<V> implements WritableMatrix<V> {
     public void testIndex(int[] indices) { for(int x : indices) testIndex(x);}    
     
     
+    @Override
     public ReadingIterator readingIterator() { return new ReadingIterator(this); }
+    
+    @Override
     public WritingIterator writingIterator() { return new WritingIterator(this); }
     
-    
+    public List<V> collect(BiPredicate<ReadingIterator<V>, V> condition) {
+        ReadingIterator<V> it = readingIterator();
+        List<V> collected = new LinkedList();
+        while(it.hasNext()) {
+            V v = it.next();
+            if(condition.test(it, v)) collected.add(v);
+        }
+        return collected;
+    }
     
     
     public static class ReadingIterator<V> implements Iterator<V> {

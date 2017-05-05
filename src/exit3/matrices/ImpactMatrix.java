@@ -18,7 +18,7 @@ import java.util.function.Predicate;
  *
  * @author jmpaon
  */
-public class ImpactMatrix extends NumberMatrix<Double> implements ComputableMatrix {
+public class ImpactMatrix extends NumberMatrix<Double> {
 
     public ImpactMatrix(int varCount) {
         super(varCount);
@@ -47,29 +47,42 @@ public class ImpactMatrix extends NumberMatrix<Double> implements ComputableMatr
         super.set(row, column, value);
     }
     
-    public ComputableMatrix normalize(double normalizationValue) {
-        throw new UnsupportedOperationException();
+    public double absRowSum(int row) {
+        List<Double> entries = collect((ReadingIterator<Double> it, Double d) -> it.row() == row);
+        return entries.stream().mapToDouble(x -> Math.abs(x)).sum();
     }
     
-    
-
-
-    @Override
-    public double relatingValue() {
-        // TODO implement
-        return 5d;
-    }
-
-    @Override
-    public double impactOfChain(VariableChain chain) {
-        
-        if(chain.matrix != this) throw new IllegalArgumentException("variable chain refers to different matrix");
-        
-        
-        
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public double absColumnSum(int column) {
+        List<Double> entries = this.collect((ReadingIterator<Double> it, Double d) -> it.column() == column);
+        return entries.stream().mapToDouble(x -> Math.abs(x)).sum();
     }
     
+    public double min() { return this.flatValues().stream().min(Double::compareTo).get(); }
+    
+    public double max() { return this.flatValues().stream().max(Double::compareTo).get(); }
+    
+    public double absMax() { return this.flatValues().stream().map(x -> Math.abs(x)).max(Double::compareTo).get(); }
+    
+    public double mean() { return this.collect((it, d) -> it.row()!=it.column()).stream().mapToDouble(x->x).average().getAsDouble(); }
+    
+    
+    public double averageDistanceFromZero() {
+        double sum = 0;
+        for(double d : flatValues()) sum+= Math.abs(d);
+        return sum / (varCount*varCount-varCount);
+    }
+    
+    public double averageDistanceFrom(double value) {
+        return this.collect((it,d) -> it.row()!=it.column()).stream().mapToDouble(x->Math.abs(x-value)).average().getAsDouble();
+    }
+    
+    public double stdev() {
+        
+        return this.collect((it,d)-> it.row() != it.column()).stream().mapToDouble(x->Math.pow(x-mean(),2)).map(Math::sqrt).average().getAsDouble();
+        
+        // return this.flatValues().stream().map(x -> x/mean()).mapToDouble(x->x).average().getAsDouble();
+        
+    }
     
     
 }

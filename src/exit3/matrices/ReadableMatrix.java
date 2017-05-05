@@ -29,8 +29,8 @@ public interface ReadableMatrix<V> {
     public String getId(int index);
     
     /**
-     * 
-     * @param chainIndices
+     * Returns the matrix entry values corresponding to a chain of variables
+     * @param chainIndices Indices of the variables in a variable chain
      * @return 
      */
     public List<V> chainValues(List<Integer> chainIndices);

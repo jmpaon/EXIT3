@@ -30,11 +30,11 @@ public class Exit3 {
         List<List<Number>> lin = Arrays.asList(Arrays.asList(1,2,3), Arrays.asList(1,2,3), Arrays.asList(1,2,3) );
         List<List<Double>> ld = Arrays.asList(Arrays.asList(1d,-2d,-3d), Arrays.asList(1d,2d,7d), Arrays.asList(1d,2d,3d) );
         List<List<Double>> ld5 = Arrays.asList(
-                Arrays.asList(0d,-2d,-3d,2d,4d),
-                Arrays.asList(1d,0d,-3d,2d,4d),
-                Arrays.asList(1d,-2d,-0d,2d,4d),
-                Arrays.asList(1d,-2d,-3d,0d,4d),
-                Arrays.asList(1d,-2d,-3d,2d,0d));
+                Arrays.asList( 0d, 1d, 1d, 9d, 1d),
+                Arrays.asList(-1d, 0d, 1d, 1d, 1d),
+                Arrays.asList(-2d, 1d, 0d, 2d, 1d),
+                Arrays.asList(-3d, 1d, 1d, 0d, 1d),
+                Arrays.asList(-7d, 1d, 1d, 1d, 0d));
         
         List<String> s1 = Arrays.asList("Mem","Moo","Mau");
         List<String> s5 = Arrays.asList("Mem","Moo","Mau","Mur","Miu");
@@ -48,10 +48,16 @@ public class Exit3 {
         p(dm);
         
         ReadableMatrix rm = dm;
-        ComputableMatrix cm = dm;
-        ImpactChain ic = new ImpactChain(cm, Arrays.asList(1,2));
+        ReadableMatrix cm = dm;
+        ImpactChain ic = new ImpactChain(cm, Arrays.asList(1,2,3,4));
         p(ic);
         p(ic.impact());
+        p(dm.absColumnSum(1));
+        p(dm.min());
+        p(dm.max());
+        p(dm.absMax());
+        p(dm.mean());
+        p(dm.stdev());
         p(ic.expansions());
         
 
