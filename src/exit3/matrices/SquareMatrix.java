@@ -17,6 +17,8 @@ import java.util.Objects;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 /**
  *
@@ -193,6 +195,26 @@ public class SquareMatrix<V> implements WritableMatrix<V> {
             if(condition.test(it, v)) collected.add(v);
         }
         return collected;
+    }
+    
+    public Stream stream() {
+        return java.util.stream.Stream<V> stream = java.util.stream.Stream<V>(supplier());
+    }
+    
+    public Supplier<V> supplier() {
+        
+        ReadingIterator it = new ReadingIterator(this);
+        
+        Supplier supplier = new Supplier() {
+        
+            @Override
+            public Object get() {
+                if(it.hasNext()) return it.next();
+                return null;
+            }
+        };
+        return supplier;
+        
     }
     
     

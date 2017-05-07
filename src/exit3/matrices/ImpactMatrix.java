@@ -77,11 +77,7 @@ public class ImpactMatrix extends NumberMatrix<Double> {
     }
     
     public double stdev() {
-        
         return this.collect((it,d)-> it.row() != it.column()).stream().mapToDouble(x->Math.pow(x-mean(),2)).map(Math::sqrt).average().getAsDouble();
-        
-        // return this.flatValues().stream().map(x -> x/mean()).mapToDouble(x->x).average().getAsDouble();
-        
     }
     
     
