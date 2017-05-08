@@ -5,10 +5,8 @@
  */
 package exit3.matrices;
 
-import java.util.Iterator;
-import java.util.LinkedList;
+
 import java.util.List;
-import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -46,7 +44,7 @@ public class NumberMatrix<V extends Number> extends SquareMatrix<V> {
         return copyMatrix;
     }
     
-    public V summarize(Function<NumberMatrix<V>, V> summarizer) {
+    public V summarize(Function<ReadableMatrix<V>, V> summarizer) {
         return summarizer.apply(this);
     }
 
