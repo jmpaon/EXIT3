@@ -49,7 +49,7 @@ public interface ReadableMatrix<V> {
      * Returns a reading iterator for a readable matrix
      * @return A reading iterator
      */
-    public SquareMatrix.ReadingIterator<V> readingIterator();
+    public SquareMatrix<V>.ReadingIterator<V> readingIterator();
     
     
     
