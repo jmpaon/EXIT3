@@ -189,7 +189,7 @@ public class SquareMatrix<V> implements WritableMatrix<V> {
     public boolean containsNullValues() {
         return values.stream().anyMatch(x -> x.isEmpty() || x.stream().anyMatch(xx -> Objects.isNull(xx)));
     }
-
+    
     
     @Override
     public String toString() {
@@ -297,7 +297,7 @@ public class SquareMatrix<V> implements WritableMatrix<V> {
     
     
     /**
-     * Returns an iterator for matrix 
+     * Returns an iterator with replace capability for matrix 
      * @return 
      */
     @Override
@@ -305,8 +305,8 @@ public class SquareMatrix<V> implements WritableMatrix<V> {
     
 
     /**
-     * 
-     * @param <V> 
+     * An iterator that can only read matrix values.
+     * @param <V> Value type of matrix
      */
     public class ReadingIterator<V> implements Iterator<V> {
 
@@ -343,11 +343,19 @@ public class SquareMatrix<V> implements WritableMatrix<V> {
             throw new NoSuchElementException();
         }
         
+        /**
+         * Returns the matrix value in the current position of the iterator
+         * @return Value at the current position of iterator
+         */
+        public V get() {
+            return matrix.get(row,column);
+        }
+        
     }
     
     /**
-     * 
-     * @param <V> 
+     * An iterator that can read and write matrix values
+     * @param <V> Value type of matrix
      */
     public class WritingIterator<V> extends ReadingIterator<V> {
         
