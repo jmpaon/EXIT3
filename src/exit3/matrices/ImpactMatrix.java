@@ -7,6 +7,7 @@ package exit3.matrices;
 
 import exit3.chains.VariableChain;
 import exit3.matrices.ComputableMatrix;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -18,7 +19,7 @@ import java.util.function.Predicate;
  *
  * @author jmpaon
  */
-public class ImpactMatrix extends NumberMatrix<Double> {
+public class ImpactMatrix extends SquareMatrix<Double> implements WritableMatrix<Double> {
 
     public ImpactMatrix(int varCount) {
         super(varCount);
@@ -48,12 +49,12 @@ public class ImpactMatrix extends NumberMatrix<Double> {
     }
     
     public double absRowSum(int row) {
-        List<Double> entries = collect((ReadingIterator<Double> it, Double d) -> it.row() == row);
+        Collection<Double> entries = collect((ReadingIterator<Double> it, Double d) -> it.row() == row);
         return entries.stream().mapToDouble(x -> Math.abs(x)).sum();
     }
     
     public double absColumnSum(int column) {
-        List<Double> entries = this.collect((ReadingIterator<Double> it, Double d) -> it.column() == column);
+        Collection<Double> entries = this.collect((ReadingIterator<Double> it, Double d) -> it.column() == column);
         return entries.stream().mapToDouble(x -> Math.abs(x)).sum();
     }
     

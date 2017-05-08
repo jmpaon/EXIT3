@@ -11,6 +11,7 @@ import java.util.List;
 /**
  *
  * @author jmpaon
+ * @param <V> Type of values in the matrix
  */
 public interface ReadableMatrix<V> {
     /**
@@ -35,6 +36,7 @@ public interface ReadableMatrix<V> {
      */
     public List<V> chainValues(List<Integer> chainIndices);
     
+    /** @return The number of variables in the matrix */
     public int varCount();
     
     /**
@@ -48,5 +50,7 @@ public interface ReadableMatrix<V> {
      * @return A reading iterator
      */
     public SquareMatrix.ReadingIterator<V> readingIterator();
+    
+    
     
 }

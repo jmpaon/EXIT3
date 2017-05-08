@@ -9,7 +9,7 @@ package exit3.matrices;
 /**
  *
  * @author jmpaon
- * @param <V>
+ * @param <V> Type of values in the matrix
  */
 public interface WritableMatrix<V> extends ReadableMatrix<V> {
     
