@@ -25,6 +25,6 @@ public interface WritableMatrix<V> extends ReadableMatrix<V> {
      * Returns a writing iterator for a writable matrix
      * @return A writing iterator
      */
-    public SquareMatrix.WritingIterator<V> writingIterator();
+    public SquareMatrix<V>.WritingIterator<V> writingIterator();
     
 }

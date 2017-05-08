@@ -46,8 +46,15 @@ public class Exit3 {
         ImpactMatrix dm = new ImpactMatrix(s5);        
         dm.setAll(ld5);
         
-        ReadableMatrix<Double> rm = dm;
+        ReadableMatrix<Double> rm = dm.copy();
         p(rm);
+        p(dm);
+        dm.transform( (x,y)-> {
+            SquareMatrix<Double>.ReadingIterator<Double> it = x.readingIterator();
+        }  )
+            
+            
+        
         
         
 

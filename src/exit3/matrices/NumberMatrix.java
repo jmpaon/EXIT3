@@ -36,11 +36,31 @@ public class NumberMatrix<V extends Number> extends SquareMatrix<V> {
     public NumberMatrix<V> copy() {
         NumberMatrix copyMatrix = new NumberMatrix(this.identifiers, this.valueValidator);
         
+        WritingIterator wit = new WritingIterator(copyMatrix);
+        ReadingIterator rit = new ReadingIterator(this);
+
+        
+        
+        while(rit.hasNext() && wit.hasNext()) {
+            rit.next();
+            wit.next();
+            
+            System.out.println("WIT Row: " + wit.row() + " Column: " + wit.column() );
+            System.out.println("RIT Row: " + rit.row() + " Column: " + rit.column() );
+            
+            wit.replace(rit.get());
+
+        }
+        
+        assert wit.hasNext() == rit.hasNext();
+        
+        /*
         for(int row=1;row<=this.varCount;row++)
             for(int col=1;col<=this.varCount;col++){
                 Number v = this.get(row, col);
                 copyMatrix.set(row, col, v);
-            }
+            } */
+        
         return copyMatrix;
     }
     

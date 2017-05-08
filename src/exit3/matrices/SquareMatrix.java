@@ -226,7 +226,7 @@ public class SquareMatrix<V> implements WritableMatrix<V> {
      * @param transformer Function returning a <code>WritableMatrix</code>.
      * @return 
      */
-    WritableMatrix<V> transform(Function<ReadableMatrix<V>, WritableMatrix<V>> transformer) {
+    public WritableMatrix<V> transform(Function<ReadableMatrix<V>, WritableMatrix<V>> transformer) {
         return transformer.apply(this);
     }
     
@@ -327,6 +327,8 @@ public class SquareMatrix<V> implements WritableMatrix<V> {
         /** @return Current matrix column of the iterator */
         public int column() { return column; }        
         
+        @Override
+        public String toString() {return String.format("Reading iterator for %d-variable matrix at position (%d,%d)",matrix.varCount(),row(),column());}
         
         @Override
         public boolean hasNext() {
@@ -369,6 +371,9 @@ public class SquareMatrix<V> implements WritableMatrix<V> {
             this.column = 0;
             this.matrix = matrix;
         }
+        
+        @Override
+        public String toString() {return String.format("Writing iterator for %d-variable matrix at position (%d,%d)",matrix.varCount(),row(),column());}
 
 
         /**
@@ -376,8 +381,9 @@ public class SquareMatrix<V> implements WritableMatrix<V> {
          * @param value New value
          */
         public void replace(V value) {
-            if(column==0) throw new NoSuchElementException();
-            matrix.set(this.row, this.column, value);
+            this.toString();
+            if(this.column() < 1 || this.column() > matrix.varCount()  ) throw new NoSuchElementException();
+            this.matrix.set(this.row(), this.column(), value);
         }
         
     }

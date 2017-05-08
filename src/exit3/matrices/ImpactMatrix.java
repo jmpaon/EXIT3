@@ -19,7 +19,7 @@ import java.util.function.Predicate;
  *
  * @author jmpaon
  */
-public class ImpactMatrix extends SquareMatrix<Double> implements WritableMatrix<Double> {
+public class ImpactMatrix extends NumberMatrix<Double> implements WritableMatrix<Double> {
 
     public ImpactMatrix(int varCount) {
         super(varCount);
