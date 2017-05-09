@@ -6,6 +6,7 @@
 package exit3.matrices;
 
 
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -38,34 +39,39 @@ public class NumberMatrix<V extends Number> extends SquareMatrix<V> {
         
         WritingIterator wit = new WritingIterator(copyMatrix);
         ReadingIterator rit = new ReadingIterator(this);
-
-        
         
         while(rit.hasNext() && wit.hasNext()) {
             rit.next();
             wit.next();
-            
-            System.out.println("WIT Row: " + wit.row() + " Column: " + wit.column() );
-            System.out.println("RIT Row: " + rit.row() + " Column: " + rit.column() );
             
             wit.replace(rit.get());
 
         }
         
         assert wit.hasNext() == rit.hasNext();
-        
-        /*
-        for(int row=1;row<=this.varCount;row++)
-            for(int col=1;col<=this.varCount;col++){
-                Number v = this.get(row, col);
-                copyMatrix.set(row, col, v);
-            } */
-        
+
         return copyMatrix;
     }
     
     public V summarize(Function<ReadableMatrix<V>, V> summarizer) {
         return summarizer.apply(this);
+    }
+    
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        java.text.DecimalFormat df = new DecimalFormat("+##.##;-##.##");
+        int id_index = 0;
+        
+        for(List<? extends Number> l : values) {
+            sb.append(this.getId(++id_index)).append(":\t");
+            for(Number i : l) {
+                sb.append(df.format(i.doubleValue()));
+                sb.append("\t");
+            }
+            sb.append("\n");
+        }
+        
+        return sb.toString();
     }
 
     

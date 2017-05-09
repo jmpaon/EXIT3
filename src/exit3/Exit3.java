@@ -7,6 +7,7 @@ package exit3;
 
 import exit3.matrices.*;
 import exit3.chains.*;
+import exit3.computations.ImpactMatrixComputation;
 
 import java.util.Arrays;
 import java.util.List;
@@ -49,16 +50,14 @@ public class Exit3 {
         ReadableMatrix<Double> rm = dm.copy();
         p(rm);
         p(dm);
-        dm.transform( (x,y)-> {
-            SquareMatrix<Double>.ReadingIterator<Double> it = x.readingIterator();
-        }  )
-            
-            
         
+        p(dm.absMax(), dm.averageDistanceFromZero(), dm.averageDistanceFrom(-7)  );
         
+        WritableMatrix wm = ImpactMatrixComputation.normalize.byDistanceFrom0(dm);
+        p(wm);
+        p(dm.transform(ImpactMatrixComputation.normalize::byDistanceFrom0));
         
 
-        
 
                 
     }
@@ -66,6 +65,10 @@ public class Exit3 {
     
     public static void p(Object o) {
         System.out.println(o);
+    }
+    
+    public static void p(Object... os) {
+        for(Object o : os) p(o);
     }
     
 }

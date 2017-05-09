@@ -7,6 +7,7 @@ package exit3.computations;
 
 import exit3.matrices.ImpactMatrix;
 import exit3.matrices.ReadableMatrix;
+import exit3.matrices.SquareMatrix;
 import exit3.matrices.WritableMatrix;
 import java.util.function.Function;
 
@@ -17,20 +18,24 @@ import java.util.function.Function;
 public class ImpactMatrixComputation {
     
     
-    
-    
-    
-    public static class normalizeByDistanceFrom0 implements Function<ImpactMatrix, WritableMatrix<Double> > {
+    public static class normalize {
 
-        @Override
-        public WritableMatrix<Double> apply(ImpactMatrix im) {
-            WritableMatrix<Double> wm = new ImpactMatrix(null)
+        public static SquareMatrix<Double> byDistanceFrom0(ImpactMatrix im) {
+            SquareMatrix<Double> wm = im.copy();
+            double ad = im.averageDistanceFromZero();
             for(int row=1;row<=im.varCount();row++)
                 for(int col=1;col<=im.varCount();col++)
-                    im.set(row, col, im.get(row, col) / im.averageDistanceFromZero()  );
-            return wm;            
+                    wm.set(row, col, im.get(row, col) / ad  );
+            return wm;                  
         }
+        
+        
+        
+        
+
     }
+    
+    
     
     
     
